@@ -24,9 +24,10 @@ import com.example.gamer.R
 @Composable
 fun LoginScreen(
     onNavigateToSignup: () -> Unit,
+    onNavigateToForgotPassword: () -> Unit,  // ← NOUVELLE LIGNE
     showSnack: (String) -> Unit,
     modifier: Modifier = Modifier
-) {
+){
     var email by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
     var passwordVisible by remember { mutableStateOf(false) }
@@ -165,7 +166,7 @@ fun LoginScreen(
             }
             Text(
                 "Forgot password ?",
-                modifier = Modifier.clickable { showSnack("Forgot password feature coming soon") },
+                modifier = Modifier.clickable { onNavigateToForgotPassword() },  // ← CHANGEMENT ICI
                 color = Color(0xFFE91E63)
             )
         }
