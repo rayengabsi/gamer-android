@@ -8,7 +8,6 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
@@ -56,12 +55,12 @@ fun ResetPasswordScreen(
                         Icon(
                             Icons.Filled.ArrowBack,
                             contentDescription = "Back",
-                            tint = Color(0xFFE91E63)
+                            tint = MaterialTheme.colorScheme.primary
                         )
                     }
                 },
                 colors = TopAppBarDefaults.topAppBarColors(
-                    containerColor = Color.White
+                    containerColor = MaterialTheme.colorScheme.background
                 )
             )
         }
@@ -76,12 +75,12 @@ fun ResetPasswordScreen(
             Text(
                 "Enter the code sent to you by",
                 fontSize = 16.sp,
-                color = Color.Black
+                color = MaterialTheme.colorScheme.onBackground
             )
             Text(
                 "Email or Mobile number",
                 fontSize = 16.sp,
-                color = Color.Black
+                color = MaterialTheme.colorScheme.onBackground
             )
 
             Spacer(Modifier.height(8.dp))
@@ -89,7 +88,7 @@ fun ResetPasswordScreen(
             Text(
                 "Please enter your new password and confirm it.",
                 fontSize = 14.sp,
-                color = Color.Gray
+                color = MaterialTheme.colorScheme.onSurfaceVariant
             )
 
             Spacer(Modifier.height(32.dp))
@@ -100,13 +99,13 @@ fun ResetPasswordScreen(
                     password = it
                     passwordError = if (it.isNotEmpty()) validatePassword(it) else null
                 },
-                label = { Text("Password", color = Color(0xFFE91E63)) },
+                label = { Text("Password") },
                 singleLine = true,
                 leadingIcon = {
                     Icon(
                         Icons.Filled.Lock,
                         contentDescription = null,
-                        tint = Color(0xFFE91E63)
+                        tint = MaterialTheme.colorScheme.primary
                     )
                 },
                 trailingIcon = {
@@ -114,7 +113,7 @@ fun ResetPasswordScreen(
                         Text(
                             text = if (passwordVisible) "👁️" else "👁️",
                             fontSize = 20.sp,
-                            color = Color(0xFFE91E63)
+                            color = MaterialTheme.colorScheme.primary
                         )
                     }
                 },
@@ -125,12 +124,7 @@ fun ResetPasswordScreen(
                     if (passwordError != null) {
                         Text(passwordError!!, color = MaterialTheme.colorScheme.error)
                     }
-                },
-                colors = OutlinedTextFieldDefaults.colors(
-                    focusedBorderColor = Color(0xFFE91E63),
-                    unfocusedBorderColor = Color(0xFFE91E63),
-                    errorBorderColor = MaterialTheme.colorScheme.error
-                )
+                }
             )
 
             Spacer(Modifier.height(16.dp))
@@ -141,13 +135,13 @@ fun ResetPasswordScreen(
                     confirmPassword = it
                     confirmPasswordError = if (it.isNotEmpty()) validateConfirmPassword(password, it) else null
                 },
-                label = { Text("Confirm Password", color = Color(0xFFE91E63)) },
+                label = { Text("Confirm Password") },
                 singleLine = true,
                 leadingIcon = {
                     Icon(
                         Icons.Filled.Lock,
                         contentDescription = null,
-                        tint = Color(0xFFE91E63)
+                        tint = MaterialTheme.colorScheme.primary
                     )
                 },
                 trailingIcon = {
@@ -155,7 +149,7 @@ fun ResetPasswordScreen(
                         Text(
                             text = if (confirmPasswordVisible) "👁️" else "👁️",
                             fontSize = 20.sp,
-                            color = Color(0xFFE91E63)
+                            color = MaterialTheme.colorScheme.primary
                         )
                     }
                 },
@@ -166,12 +160,7 @@ fun ResetPasswordScreen(
                     if (confirmPasswordError != null) {
                         Text(confirmPasswordError!!, color = MaterialTheme.colorScheme.error)
                     }
-                },
-                colors = OutlinedTextFieldDefaults.colors(
-                    focusedBorderColor = Color(0xFFE91E63),
-                    unfocusedBorderColor = Color(0xFFE91E63),
-                    errorBorderColor = MaterialTheme.colorScheme.error
-                )
+                }
             )
 
             Spacer(Modifier.height(24.dp))
@@ -194,9 +183,6 @@ fun ResetPasswordScreen(
                 modifier = Modifier
                     .fillMaxWidth()
                     .height(50.dp),
-                colors = ButtonDefaults.buttonColors(
-                    containerColor = Color(0xFFE91E63)
-                ),
                 shape = MaterialTheme.shapes.large
             ) {
                 Text("Submit", fontSize = 16.sp, fontWeight = FontWeight.Bold)

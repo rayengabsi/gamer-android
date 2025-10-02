@@ -10,7 +10,6 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
@@ -41,12 +40,12 @@ fun OtpValidationScreen(
                         Icon(
                             Icons.Filled.ArrowBack,
                             contentDescription = "Back",
-                            tint = Color(0xFFE91E63)
+                            tint = MaterialTheme.colorScheme.primary
                         )
                     }
                 },
                 colors = TopAppBarDefaults.topAppBarColors(
-                    containerColor = Color.White
+                    containerColor = MaterialTheme.colorScheme.background
                 )
             )
         }
@@ -61,12 +60,12 @@ fun OtpValidationScreen(
             Text(
                 "Enter the code sent to you by",
                 fontSize = 16.sp,
-                color = Color.Black
+                color = MaterialTheme.colorScheme.onBackground
             )
             Text(
                 "Email or Mobile number",
                 fontSize = 16.sp,
-                color = Color.Black
+                color = MaterialTheme.colorScheme.onBackground
             )
 
             Spacer(Modifier.height(40.dp))
@@ -112,9 +111,6 @@ fun OtpValidationScreen(
                 modifier = Modifier
                     .fillMaxWidth()
                     .height(50.dp),
-                colors = ButtonDefaults.buttonColors(
-                    containerColor = Color(0xFFE91E63)
-                ),
                 shape = MaterialTheme.shapes.large
             ) {
                 Text("Verify", fontSize = 16.sp, fontWeight = FontWeight.Bold)
@@ -129,12 +125,12 @@ fun OtpValidationScreen(
                 Text(
                     "Didn't receive a verification code?",
                     fontSize = 14.sp,
-                    color = Color.Gray
+                    color = MaterialTheme.colorScheme.onSurfaceVariant
                 )
                 TextButton(onClick = { showSnack("Code resent to $email") }) {
                     Text(
                         "Resend code",
-                        color = Color(0xFFE91E63),
+                        color = MaterialTheme.colorScheme.primary,
                         fontWeight = FontWeight.Bold
                     )
                 }
@@ -154,12 +150,12 @@ fun OtpDigitBox(
         onValueChange = onValueChange,
         modifier = modifier
             .height(60.dp)
-            .border(2.dp, Color(0xFFE91E63), MaterialTheme.shapes.medium)
+            .border(2.dp, MaterialTheme.colorScheme.primary, MaterialTheme.shapes.medium)
             .padding(8.dp),
         textStyle = TextStyle(
             fontSize = 32.sp,
             fontWeight = FontWeight.Bold,
-            color = Color(0xFFE91E63),
+            color = MaterialTheme.colorScheme.primary,
             textAlign = TextAlign.Center
         ),
         keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),

@@ -8,7 +8,6 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
@@ -45,12 +44,12 @@ fun ForgotPasswordScreen(
                         Icon(
                             Icons.Filled.ArrowBack,
                             contentDescription = "Back",
-                            tint = Color(0xFFE91E63)
+                            tint = MaterialTheme.colorScheme.primary
                         )
                     }
                 },
                 colors = TopAppBarDefaults.topAppBarColors(
-                    containerColor = Color.White
+                    containerColor = MaterialTheme.colorScheme.background
                 )
             )
         }
@@ -66,7 +65,7 @@ fun ForgotPasswordScreen(
                 "Forgot Password",
                 fontSize = 24.sp,
                 fontWeight = FontWeight.Bold,
-                color = Color.Black
+                color = MaterialTheme.colorScheme.onBackground
             )
 
             Spacer(Modifier.height(8.dp))
@@ -74,7 +73,7 @@ fun ForgotPasswordScreen(
             Text(
                 "Please enter your registered email to reset your password",
                 fontSize = 14.sp,
-                color = Color.Gray
+                color = MaterialTheme.colorScheme.onSurfaceVariant
             )
 
             Spacer(Modifier.height(32.dp))
@@ -85,13 +84,13 @@ fun ForgotPasswordScreen(
                     email = it
                     emailError = if (it.isNotEmpty()) validateEmail(it) else null
                 },
-                label = { Text("Email", color = Color(0xFFE91E63)) },
+                label = { Text("Email") },
                 singleLine = true,
                 leadingIcon = {
                     Icon(
                         Icons.Filled.Email,
                         contentDescription = null,
-                        tint = Color(0xFFE91E63)
+                        tint = MaterialTheme.colorScheme.primary
                     )
                 },
                 keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Email),
@@ -101,12 +100,7 @@ fun ForgotPasswordScreen(
                     if (emailError != null) {
                         Text(emailError!!, color = MaterialTheme.colorScheme.error)
                     }
-                },
-                colors = OutlinedTextFieldDefaults.colors(
-                    focusedBorderColor = Color(0xFFE91E63),
-                    unfocusedBorderColor = Color(0xFFE91E63),
-                    errorBorderColor = MaterialTheme.colorScheme.error
-                )
+                }
             )
 
             Spacer(Modifier.height(24.dp))
@@ -126,9 +120,6 @@ fun ForgotPasswordScreen(
                 modifier = Modifier
                     .fillMaxWidth()
                     .height(50.dp),
-                colors = ButtonDefaults.buttonColors(
-                    containerColor = Color(0xFFE91E63)
-                ),
                 shape = MaterialTheme.shapes.large
             ) {
                 Text("Submit", fontSize = 16.sp, fontWeight = FontWeight.Bold)
@@ -139,7 +130,7 @@ fun ForgotPasswordScreen(
             Text(
                 "OR",
                 modifier = Modifier.align(Alignment.CenterHorizontally),
-                color = Color(0xFFE91E63),
+                color = MaterialTheme.colorScheme.primary,
                 fontWeight = FontWeight.Bold
             )
 
@@ -150,9 +141,6 @@ fun ForgotPasswordScreen(
                 modifier = Modifier
                     .fillMaxWidth()
                     .height(50.dp),
-                colors = ButtonDefaults.buttonColors(
-                    containerColor = Color(0xFFE91E63)
-                ),
                 shape = MaterialTheme.shapes.large
             ) {
                 Text("Send SMS", fontSize = 16.sp, fontWeight = FontWeight.Bold)

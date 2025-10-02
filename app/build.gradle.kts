@@ -53,6 +53,8 @@ dependencies {
     // Material icons - core only (no extended icons needed)
     implementation("androidx.compose.material:material-icons-core")
 
+
+
     // AndroidX
     implementation("androidx.core:core-ktx:1.12.0")
     implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.7.0")
