@@ -9,6 +9,7 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import com.example.gamer.ui.ForgotPasswordScreen
 import com.example.gamer.ui.LoginScreen
+import com.example.gamer.ui.OtpValidationScreen
 import kotlinx.coroutines.launch
 
 class MainActivity : ComponentActivity() {
@@ -18,8 +19,8 @@ class MainActivity : ComponentActivity() {
             val snackbarHostState = remember { SnackbarHostState() }
             val scope = rememberCoroutineScope()
 
-            // Variable pour gérer quel écran afficher
             var currentScreen by remember { mutableStateOf("login") }
+            var userEmail by remember { mutableStateOf("") }
 
             Scaffold(
                 snackbarHost = { SnackbarHost(snackbarHostState) }
@@ -47,10 +48,24 @@ class MainActivity : ComponentActivity() {
                             currentScreen = "login"
                         },
                         onNavigateToOtp = { email ->
+                            userEmail = email
+                            currentScreen = "otp"
+                        },
+                        showSnack = { msg ->
                             scope.launch {
-                                snackbarHostState.showSnackbar("OTP sent to $email")
+                                snackbarHostState.showSnackbar(msg)
                             }
-                            // Plus tard: currentScreen = "otp"
+                        },
+                        modifier = Modifier.padding(padding)
+                    )
+
+                    "otp" -> OtpValidationScreen(
+                        email = userEmail,
+                        onNavigateBack = {
+                            currentScreen = "forgot_password"
+                        },
+                        onNavigateToReset = {
+                            currentScreen = "reset_password"
                         },
                         showSnack = { msg ->
                             scope.launch {
