@@ -10,6 +10,7 @@ import androidx.compose.ui.Modifier
 import com.example.gamer.ui.ForgotPasswordScreen
 import com.example.gamer.ui.LoginScreen
 import com.example.gamer.ui.OtpValidationScreen
+import com.example.gamer.ui.ResetPasswordScreen
 import kotlinx.coroutines.launch
 
 class MainActivity : ComponentActivity() {
@@ -66,6 +67,21 @@ class MainActivity : ComponentActivity() {
                         },
                         onNavigateToReset = {
                             currentScreen = "reset_password"
+                        },
+                        showSnack = { msg ->
+                            scope.launch {
+                                snackbarHostState.showSnackbar(msg)
+                            }
+                        },
+                        modifier = Modifier.padding(padding)
+                    )
+
+                    "reset_password" -> ResetPasswordScreen(
+                        onNavigateBack = {
+                            currentScreen = "otp"
+                        },
+                        onPasswordReset = {
+                            currentScreen = "login"
                         },
                         showSnack = { msg ->
                             scope.launch {
