@@ -25,6 +25,7 @@ import com.example.gamer.R
 fun LoginScreen(
     onNavigateToSignup: () -> Unit,
     onNavigateToForgotPassword: () -> Unit,
+    onLoginSuccess: () -> Unit,
     showSnack: (String) -> Unit,
     modifier: Modifier = Modifier
 ) {
@@ -164,6 +165,7 @@ fun LoginScreen(
 
                 if (emailValidation == null && passwordValidation == null) {
                     showSnack("Login successful!")
+                    onLoginSuccess()
                 } else {
                     showSnack("Please fix the errors")
                 }
