@@ -39,7 +39,7 @@ fun SignupScreen(
     var passwordVisible by remember { mutableStateOf(false) }
     var confirmPasswordVisible by remember { mutableStateOf(false) }
 
-    // Validation states
+
     var fullNameError by remember { mutableStateOf<String?>(null) }
     var emailError by remember { mutableStateOf<String?>(null) }
     var passwordError by remember { mutableStateOf<String?>(null) }

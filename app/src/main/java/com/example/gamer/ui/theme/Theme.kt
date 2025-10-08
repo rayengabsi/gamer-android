@@ -1,18 +1,20 @@
-package com.example.gamer.ui
+package com.example.gamer.ui.theme
 
 import androidx.compose.foundation.isSystemInDarkTheme
-import androidx.compose.material3.*
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.darkColorScheme
+import androidx.compose.material3.lightColorScheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Color
 
-// Couleurs Light Mode
+// Light Mode Colors
 private val LightPrimary = Color(0xFFE91E63)
 private val LightBackground = Color(0xFFFFFFFF)
 private val LightSurface = Color(0xFFFFFFFF)
 private val LightOnBackground = Color(0xFF000000)
 private val LightOnSurface = Color(0xFF000000)
 
-// Couleurs Dark Mode
+// Dark Mode Colors
 private val DarkPrimary = Color(0xFFE91E63)
 private val DarkBackground = Color(0xFF121212)
 private val DarkSurface = Color(0xFF1E1E1E)
