@@ -76,22 +76,30 @@ fun OtpValidationScreen(
             ) {
                 OtpDigitBox(
                     value = otp1,
-                    onValueChange = { if (it.length <= 1) otp1 = it },
+                    onValueChange = { input ->
+                        if (input.all { it.isDigit() } && input.length <= 1) otp1 = input
+                    },
                     modifier = Modifier.weight(1f)
                 )
                 OtpDigitBox(
                     value = otp2,
-                    onValueChange = { if (it.length <= 1) otp2 = it },
+                    onValueChange = { input ->
+                        if (input.all { it.isDigit() } && input.length <= 1) otp2 = input
+                    },
                     modifier = Modifier.weight(1f)
                 )
                 OtpDigitBox(
                     value = otp3,
-                    onValueChange = { if (it.length <= 1) otp3 = it },
+                    onValueChange = { input ->
+                        if (input.all { it.isDigit() } && input.length <= 1) otp3 = input
+                    },
                     modifier = Modifier.weight(1f)
                 )
                 OtpDigitBox(
                     value = otp4,
-                    onValueChange = { if (it.length <= 1) otp4 = it },
+                    onValueChange = { input ->
+                        if (input.all { it.isDigit() } && input.length <= 1) otp4 = input
+                    },
                     modifier = Modifier.weight(1f)
                 )
             }
