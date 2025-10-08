@@ -15,10 +15,10 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import com.example.gamer.ui.ForgotPasswordScreen
 import com.example.gamer.ui.LoginScreen
+import com.example.gamer.ui.NewsScreen
 import com.example.gamer.ui.OtpValidationScreen
 import com.example.gamer.ui.ResetPasswordScreen
 import com.example.gamer.ui.SignupScreen
-import androidx.compose.foundation.layout.padding
 import com.example.gamer.ui.theme.GamerTheme
 import kotlinx.coroutines.launch
 
@@ -26,7 +26,6 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-            // GamerTheme will automatically follow system theme
             GamerTheme {
                 val snackbarHostState = remember { SnackbarHostState() }
                 val scope = rememberCoroutineScope()
@@ -47,6 +46,9 @@ class MainActivity : ComponentActivity() {
                             },
                             onNavigateToForgotPassword = {
                                 currentScreen = "forgot_password"
+                            },
+                            onLoginSuccess = {
+                                currentScreen = "news"
                             },
                             showSnack = { msg ->
                                 scope.launch { snackbarHostState.showSnackbar(msg) }
@@ -89,6 +91,14 @@ class MainActivity : ComponentActivity() {
                         "reset_password" -> ResetPasswordScreen(
                             onNavigateBack = { currentScreen = "otp" },
                             onPasswordReset = { currentScreen = "login" },
+                            showSnack = { msg ->
+                                scope.launch { snackbarHostState.showSnackbar(msg) }
+                            },
+                            modifier = Modifier.padding(padding)
+                        )
+
+                        "news" -> NewsScreen(
+                            onNavigateBack = { currentScreen = "login" },
                             showSnack = { msg ->
                                 scope.launch { snackbarHostState.showSnackbar(msg) }
                             },
