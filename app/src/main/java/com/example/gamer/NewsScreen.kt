@@ -27,6 +27,8 @@ import com.example.gamer.R
 @Composable
 fun NewsScreen(
     onNavigateBack: () -> Unit,
+    onNavigateToStore: () -> Unit,
+    onNavigateToProfile: () -> Unit,
     showSnack: (String) -> Unit,
     modifier: Modifier = Modifier
 ) {
@@ -101,7 +103,7 @@ fun NewsScreen(
                     selected = selectedTab == 1,
                     onClick = {
                         selectedTab = 1
-                        onNavigateBack()
+                        onNavigateToStore()
                     },
                     colors = NavigationBarItemDefaults.colors(
                         selectedIconColor = Color.White,

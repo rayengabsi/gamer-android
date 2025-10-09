@@ -17,8 +17,10 @@ import com.example.gamer.ui.ForgotPasswordScreen
 import com.example.gamer.ui.LoginScreen
 import com.example.gamer.ui.NewsScreen
 import com.example.gamer.ui.OtpValidationScreen
+import com.example.gamer.ui.ProfileScreen
 import com.example.gamer.ui.ResetPasswordScreen
 import com.example.gamer.ui.SignupScreen
+import com.example.gamer.ui.StoreScreen
 import com.example.gamer.ui.theme.GamerTheme
 import kotlinx.coroutines.launch
 
@@ -98,6 +100,28 @@ class MainActivity : ComponentActivity() {
                         )
 
                         "news" -> NewsScreen(
+                            onNavigateBack = { currentScreen = "login" },
+                            onNavigateToStore = { currentScreen = "store" },
+                            onNavigateToProfile = { currentScreen = "profile" },
+                            showSnack = { msg ->
+                                scope.launch { snackbarHostState.showSnackbar(msg) }
+                            },
+                            modifier = Modifier.padding(padding)
+                        )
+
+                        "store" -> StoreScreen(
+                            onNavigateToNews = { currentScreen = "news" },
+                            onNavigateToProfile = { currentScreen = "profile" },
+                            onNavigateBack = { currentScreen = "login" },
+                            showSnack = { msg ->
+                                scope.launch { snackbarHostState.showSnackbar(msg) }
+                            },
+                            modifier = Modifier.padding(padding)
+                        )
+
+                        "profile" -> ProfileScreen(
+                            onNavigateToNews = { currentScreen = "news" },
+                            onNavigateToStore = { currentScreen = "store" },
                             onNavigateBack = { currentScreen = "login" },
                             showSnack = { msg ->
                                 scope.launch { snackbarHostState.showSnackbar(msg) }
