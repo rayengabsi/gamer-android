@@ -2,6 +2,7 @@ package com.example.gamer.ui
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
@@ -41,6 +42,13 @@ fun StoreScreen(
     modifier: Modifier = Modifier
 ) {
     var selectedTab by remember { mutableStateOf(1) }
+    val isDarkMode = isSystemInDarkTheme()
+    val primaryColor = Color(0xFFE91E63)
+    val barColor = if (isDarkMode) Color.Black else primaryColor
+    val backgroundColor = if (isDarkMode) Color(0xFF121212) else Color(0xFFF5F5F5)
+    val cardBackground = if (isDarkMode) Color(0xFF1E1E1E) else Color.White
+    val textColor = if (isDarkMode) Color.White else Color.Black
+    val secondaryTextColor = if (isDarkMode) Color.White.copy(alpha = 0.6f) else Color.Gray
 
     val games = remember {
         listOf(
@@ -98,26 +106,26 @@ fun StoreScreen(
                     }
                 },
                 colors = TopAppBarDefaults.topAppBarColors(
-                    containerColor = Color(0xFFE91E63)
+                    containerColor = barColor
                 )
             )
         },
         bottomBar = {
             NavigationBar(
-                containerColor = Color(0xFFE91E63)
+                containerColor = barColor
             ) {
                 NavigationBarItem(
                     icon = {
                         Icon(
                             Icons.Default.Notifications,
                             contentDescription = "News",
-                            tint = if (selectedTab == 0) Color.White else Color.White.copy(alpha = 0.6f)
+                            tint = Color.White
                         )
                     },
                     label = {
                         Text(
                             "News",
-                            color = if (selectedTab == 0) Color.White else Color.White.copy(alpha = 0.6f)
+                            color = Color.White
                         )
                     },
                     selected = selectedTab == 0,
@@ -127,7 +135,9 @@ fun StoreScreen(
                     },
                     colors = NavigationBarItemDefaults.colors(
                         selectedIconColor = Color.White,
+                        selectedTextColor = Color.White,
                         unselectedIconColor = Color.White.copy(alpha = 0.6f),
+                        unselectedTextColor = Color.White.copy(alpha = 0.6f),
                         indicatorColor = Color.Transparent
                     )
                 )
@@ -137,20 +147,22 @@ fun StoreScreen(
                         Icon(
                             Icons.Default.ShoppingCart,
                             contentDescription = "Store",
-                            tint = if (selectedTab == 1) Color.White else Color.White.copy(alpha = 0.6f)
+                            tint = Color.White
                         )
                     },
                     label = {
                         Text(
                             "Store",
-                            color = if (selectedTab == 1) Color.White else Color.White.copy(alpha = 0.6f)
+                            color = Color.White
                         )
                     },
                     selected = selectedTab == 1,
                     onClick = { selectedTab = 1 },
                     colors = NavigationBarItemDefaults.colors(
                         selectedIconColor = Color.White,
+                        selectedTextColor = Color.White,
                         unselectedIconColor = Color.White.copy(alpha = 0.6f),
+                        unselectedTextColor = Color.White.copy(alpha = 0.6f),
                         indicatorColor = Color.Transparent
                     )
                 )
@@ -160,13 +172,13 @@ fun StoreScreen(
                         Icon(
                             Icons.Default.Person,
                             contentDescription = "Profile",
-                            tint = if (selectedTab == 2) Color.White else Color.White.copy(alpha = 0.6f)
+                            tint = Color.White
                         )
                     },
                     label = {
                         Text(
                             "Profile",
-                            color = if (selectedTab == 2) Color.White else Color.White.copy(alpha = 0.6f)
+                            color = Color.White
                         )
                     },
                     selected = selectedTab == 2,
@@ -176,7 +188,9 @@ fun StoreScreen(
                     },
                     colors = NavigationBarItemDefaults.colors(
                         selectedIconColor = Color.White,
+                        selectedTextColor = Color.White,
                         unselectedIconColor = Color.White.copy(alpha = 0.6f),
+                        unselectedTextColor = Color.White.copy(alpha = 0.6f),
                         indicatorColor = Color.Transparent
                     )
                 )
@@ -185,7 +199,7 @@ fun StoreScreen(
         floatingActionButton = {
             FloatingActionButton(
                 onClick = { showSnack("Add new game") },
-                containerColor = Color(0xFFE91E63),
+                containerColor = primaryColor,
                 contentColor = Color.White
             ) {
                 Icon(Icons.Default.Add, contentDescription = "Add")
@@ -196,7 +210,7 @@ fun StoreScreen(
             modifier = modifier
                 .fillMaxSize()
                 .padding(paddingValues)
-                .background(Color(0xFFF5F5F5))
+                .background(backgroundColor)
                 .padding(horizontal = 16.dp),
             verticalArrangement = Arrangement.spacedBy(16.dp)
         ) {
@@ -207,6 +221,7 @@ fun StoreScreen(
             items(games) { game ->
                 GameCard(
                     game = game,
+                    isDarkMode = isDarkMode,
                     onAddToCart = {
                         showSnack("${game.title} added to cart")
                     }
@@ -223,13 +238,19 @@ fun StoreScreen(
 @Composable
 fun GameCard(
     game: Game,
+    isDarkMode: Boolean,
     onAddToCart: () -> Unit
 ) {
+    val cardBackground = if (isDarkMode) Color(0xFF1E1E1E) else Color.White
+    val textColor = if (isDarkMode) Color.White else Color.Black
+    val secondaryTextColor = if (isDarkMode) Color.White.copy(alpha = 0.6f) else Color.Gray
+    val primaryColor = Color(0xFFE91E63)
+
     Card(
         modifier = Modifier.fillMaxWidth(),
         shape = RoundedCornerShape(12.dp),
         elevation = CardDefaults.cardElevation(defaultElevation = 2.dp),
-        colors = CardDefaults.cardColors(containerColor = Color.White)
+        colors = CardDefaults.cardColors(containerColor = cardBackground)
     ) {
         Row(
             modifier = Modifier
@@ -260,7 +281,7 @@ fun GameCard(
                     text = game.title,
                     fontSize = 16.sp,
                     fontWeight = FontWeight.Bold,
-                    color = Color(0xFFE91E63)
+                    color = primaryColor
                 )
 
                 Spacer(modifier = Modifier.height(8.dp))
@@ -268,7 +289,7 @@ fun GameCard(
                 Text(
                     text = game.platform,
                     fontSize = 14.sp,
-                    color = Color.Gray
+                    color = secondaryTextColor
                 )
 
                 Spacer(modifier = Modifier.height(8.dp))
@@ -277,7 +298,7 @@ fun GameCard(
                     text = game.price,
                     fontSize = 14.sp,
                     fontWeight = FontWeight.Medium,
-                    color = Color.Black
+                    color = textColor
                 )
             }
 
@@ -285,7 +306,7 @@ fun GameCard(
             IconButton(
                 onClick = onAddToCart,
                 colors = IconButtonDefaults.iconButtonColors(
-                    contentColor = Color(0xFFE91E63)
+                    contentColor = primaryColor
                 )
             ) {
                 Icon(

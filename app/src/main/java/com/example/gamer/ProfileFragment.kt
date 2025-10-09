@@ -3,6 +3,7 @@ package com.example.gamer.ui
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
+import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
@@ -36,6 +37,13 @@ fun ProfileScreen(
     modifier: Modifier = Modifier
 ) {
     var selectedTab by remember { mutableStateOf(2) }
+    val isDarkMode = isSystemInDarkTheme()
+    val primaryColor = Color(0xFFE91E63)
+    val barColor = if (isDarkMode) Color.Black else primaryColor
+    val backgroundColor = if (isDarkMode) Color(0xFF121212) else Color.White
+    val cardBackground = if (isDarkMode) Color(0xFF1E1E1E) else Color.White
+    val textColor = if (isDarkMode) Color.White else Color.Black
+    val secondaryTextColor = if (isDarkMode) Color.White.copy(alpha = 0.6f) else Color.Gray
 
     Scaffold(
         topBar = {
@@ -58,26 +66,26 @@ fun ProfileScreen(
                     }
                 },
                 colors = TopAppBarDefaults.topAppBarColors(
-                    containerColor = Color(0xFFE91E63)
+                    containerColor = barColor
                 )
             )
         },
         bottomBar = {
             NavigationBar(
-                containerColor = Color(0xFFE91E63)
+                containerColor = barColor
             ) {
                 NavigationBarItem(
                     icon = {
                         Icon(
                             Icons.Default.Notifications,
                             contentDescription = "News",
-                            tint = if (selectedTab == 0) Color.White else Color.White.copy(alpha = 0.6f)
+                            tint = Color.White
                         )
                     },
                     label = {
                         Text(
                             "News",
-                            color = if (selectedTab == 0) Color.White else Color.White.copy(alpha = 0.6f)
+                            color = Color.White
                         )
                     },
                     selected = selectedTab == 0,
@@ -87,7 +95,9 @@ fun ProfileScreen(
                     },
                     colors = NavigationBarItemDefaults.colors(
                         selectedIconColor = Color.White,
+                        selectedTextColor = Color.White,
                         unselectedIconColor = Color.White.copy(alpha = 0.6f),
+                        unselectedTextColor = Color.White.copy(alpha = 0.6f),
                         indicatorColor = Color.Transparent
                     )
                 )
@@ -97,13 +107,13 @@ fun ProfileScreen(
                         Icon(
                             Icons.Default.ShoppingCart,
                             contentDescription = "Store",
-                            tint = if (selectedTab == 1) Color.White else Color.White.copy(alpha = 0.6f)
+                            tint = Color.White
                         )
                     },
                     label = {
                         Text(
                             "Store",
-                            color = if (selectedTab == 1) Color.White else Color.White.copy(alpha = 0.6f)
+                            color = Color.White
                         )
                     },
                     selected = selectedTab == 1,
@@ -113,7 +123,9 @@ fun ProfileScreen(
                     },
                     colors = NavigationBarItemDefaults.colors(
                         selectedIconColor = Color.White,
+                        selectedTextColor = Color.White,
                         unselectedIconColor = Color.White.copy(alpha = 0.6f),
+                        unselectedTextColor = Color.White.copy(alpha = 0.6f),
                         indicatorColor = Color.Transparent
                     )
                 )
@@ -123,20 +135,22 @@ fun ProfileScreen(
                         Icon(
                             Icons.Default.Person,
                             contentDescription = "Profile",
-                            tint = if (selectedTab == 2) Color.White else Color.White.copy(alpha = 0.6f)
+                            tint = Color.White
                         )
                     },
                     label = {
                         Text(
                             "Profile",
-                            color = if (selectedTab == 2) Color.White else Color.White.copy(alpha = 0.6f)
+                            color = Color.White
                         )
                     },
                     selected = selectedTab == 2,
                     onClick = { selectedTab = 2 },
                     colors = NavigationBarItemDefaults.colors(
                         selectedIconColor = Color.White,
+                        selectedTextColor = Color.White,
                         unselectedIconColor = Color.White.copy(alpha = 0.6f),
+                        unselectedTextColor = Color.White.copy(alpha = 0.6f),
                         indicatorColor = Color.Transparent
                     )
                 )
@@ -148,7 +162,7 @@ fun ProfileScreen(
                 .fillMaxSize()
                 .padding(paddingValues)
                 .verticalScroll(rememberScrollState())
-                .background(Color.White),
+                .background(backgroundColor),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             Spacer(modifier = Modifier.height(24.dp))
@@ -176,7 +190,7 @@ fun ProfileScreen(
                 text = "FullName",
                 fontSize = 18.sp,
                 fontWeight = FontWeight.Medium,
-                color = Color.Black
+                color = textColor
             )
 
             Spacer(modifier = Modifier.height(4.dp))
@@ -185,7 +199,7 @@ fun ProfileScreen(
             Text(
                 text = "Email",
                 fontSize = 14.sp,
-                color = Color.Gray
+                color = secondaryTextColor
             )
 
             Spacer(modifier = Modifier.height(24.dp))
@@ -222,7 +236,7 @@ fun ProfileScreen(
                     text = "Bookmarks",
                     fontSize = 18.sp,
                     fontWeight = FontWeight.Bold,
-                    color = Color.Black
+                    color = textColor
                 )
 
                 Spacer(modifier = Modifier.height(16.dp))
@@ -233,6 +247,7 @@ fun ProfileScreen(
                     title = "Red Dead Redemption 2",
                     category = "PS4 Games",
                     price = "70.0 $",
+                    isDarkMode = isDarkMode,
                     onBookmarkClick = { showSnack("Bookmark clicked") }
                 )
 
@@ -244,6 +259,7 @@ fun ProfileScreen(
                     title = "Grand Theft Auto 5",
                     category = "PS4 Games",
                     price = "60.0 $",
+                    isDarkMode = isDarkMode,
                     onBookmarkClick = { showSnack("Bookmark clicked") }
                 )
 
@@ -259,15 +275,21 @@ fun BookmarkCard(
     title: String,
     category: String,
     price: String,
+    isDarkMode: Boolean,
     onBookmarkClick: () -> Unit
 ) {
+    val cardBackground = if (isDarkMode) Color(0xFF1E1E1E) else Color.White
+    val textColor = if (isDarkMode) Color.White else Color.Black
+    val secondaryTextColor = if (isDarkMode) Color.White.copy(alpha = 0.6f) else Color.Gray
+    val primaryColor = Color(0xFFE91E63)
+
     Card(
         modifier = Modifier
             .fillMaxWidth()
             .height(120.dp),
         shape = RoundedCornerShape(8.dp),
         colors = CardDefaults.cardColors(
-            containerColor = Color.White
+            containerColor = cardBackground
         ),
         elevation = CardDefaults.cardElevation(
             defaultElevation = 2.dp
@@ -303,7 +325,7 @@ fun BookmarkCard(
                     text = title,
                     fontSize = 16.sp,
                     fontWeight = FontWeight.Bold,
-                    color = Color(0xFFE91E63)
+                    color = primaryColor
                 )
 
                 Spacer(modifier = Modifier.height(4.dp))
@@ -311,7 +333,7 @@ fun BookmarkCard(
                 Text(
                     text = category,
                     fontSize = 14.sp,
-                    color = Color.Gray
+                    color = secondaryTextColor
                 )
 
                 Spacer(modifier = Modifier.height(8.dp))
@@ -320,7 +342,7 @@ fun BookmarkCard(
                     text = price,
                     fontSize = 14.sp,
                     fontWeight = FontWeight.Medium,
-                    color = Color.Black
+                    color = textColor
                 )
             }
 
@@ -332,7 +354,7 @@ fun BookmarkCard(
                 Icon(
                     imageVector = Icons.Default.Star,
                     contentDescription = "Bookmark",
-                    tint = Color(0xFFE91E63),
+                    tint = primaryColor,
                     modifier = Modifier.size(24.dp)
                 )
             }
