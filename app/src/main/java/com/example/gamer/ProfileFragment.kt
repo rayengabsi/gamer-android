@@ -1,21 +1,30 @@
 package com.example.gamer.ui
 
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Notifications
 import androidx.compose.material.icons.filled.Person
 import androidx.compose.material.icons.filled.ShoppingCart
+import androidx.compose.material.icons.filled.Star
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.example.gamer.R
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -26,7 +35,7 @@ fun ProfileScreen(
     showSnack: (String) -> Unit,
     modifier: Modifier = Modifier
 ) {
-    var selectedTab by remember { mutableStateOf(1) }
+    var selectedTab by remember { mutableStateOf(2) }
 
     Scaffold(
         topBar = {
@@ -98,7 +107,10 @@ fun ProfileScreen(
                         )
                     },
                     selected = selectedTab == 1,
-                    onClick = { selectedTab = 1 },
+                    onClick = {
+                        selectedTab = 1
+                        onNavigateToStore()
+                    },
                     colors = NavigationBarItemDefaults.colors(
                         selectedIconColor = Color.White,
                         unselectedIconColor = Color.White.copy(alpha = 0.6f),
@@ -136,33 +148,194 @@ fun ProfileScreen(
                 .fillMaxSize()
                 .padding(paddingValues)
                 .verticalScroll(rememberScrollState())
-                .background(Color(0xFFF5F5F5)),
-            horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.Center
+                .background(Color.White),
+            horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            Text(
-                text = "Store",
-                fontSize = 32.sp,
-                fontWeight = FontWeight.Bold,
-                color = Color(0xFFE91E63)
-            )
+            Spacer(modifier = Modifier.height(24.dp))
+
+            // Profile Avatar
+            Box(
+                modifier = Modifier
+                    .size(120.dp)
+                    .clip(CircleShape)
+                    .background(Color(0xFFE91E63)),
+                contentAlignment = Alignment.Center
+            ) {
+                Icon(
+                    imageVector = Icons.Default.Person,
+                    contentDescription = "Profile",
+                    tint = Color.White,
+                    modifier = Modifier.size(60.dp)
+                )
+            }
 
             Spacer(modifier = Modifier.height(16.dp))
 
+            // Full Name
             Text(
-                text = "Coming Soon!",
+                text = "FullName",
                 fontSize = 18.sp,
+                fontWeight = FontWeight.Medium,
+                color = Color.Black
+            )
+
+            Spacer(modifier = Modifier.height(4.dp))
+
+            // Email
+            Text(
+                text = "Email",
+                fontSize = 14.sp,
                 color = Color.Gray
             )
 
             Spacer(modifier = Modifier.height(24.dp))
 
-            Text(
-                text = "Browse gaming products, merchandise, and more.",
-                fontSize = 14.sp,
-                color = Color.Gray,
-                modifier = Modifier.padding(horizontal = 32.dp)
+            // Edit Profile Button
+            Button(
+                onClick = { showSnack("Edit Profile clicked") },
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(horizontal = 16.dp)
+                    .height(48.dp),
+                colors = ButtonDefaults.buttonColors(
+                    containerColor = Color(0xFFE91E63)
+                ),
+                shape = RoundedCornerShape(24.dp)
+            ) {
+                Text(
+                    text = "Edit Profile",
+                    color = Color.White,
+                    fontSize = 16.sp,
+                    fontWeight = FontWeight.Medium
+                )
+            }
+
+            Spacer(modifier = Modifier.height(32.dp))
+
+            // Bookmarks Section
+            Column(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(horizontal = 16.dp)
+            ) {
+                Text(
+                    text = "Bookmarks",
+                    fontSize = 18.sp,
+                    fontWeight = FontWeight.Bold,
+                    color = Color.Black
+                )
+
+                Spacer(modifier = Modifier.height(16.dp))
+
+                // Red Dead Redemption 2
+                BookmarkCard(
+                    imageRes = R.drawable.readdead2,
+                    title = "Red Dead Redemption 2",
+                    category = "PS4 Games",
+                    price = "70.0 $",
+                    onBookmarkClick = { showSnack("Bookmark clicked") }
+                )
+
+                Spacer(modifier = Modifier.height(12.dp))
+
+                // Grand Theft Auto 5
+                BookmarkCard(
+                    imageRes = R.drawable.gta,
+                    title = "Grand Theft Auto 5",
+                    category = "PS4 Games",
+                    price = "60.0 $",
+                    onBookmarkClick = { showSnack("Bookmark clicked") }
+                )
+
+                Spacer(modifier = Modifier.height(16.dp))
+            }
+        }
+    }
+}
+
+@Composable
+fun BookmarkCard(
+    imageRes: Int,
+    title: String,
+    category: String,
+    price: String,
+    onBookmarkClick: () -> Unit
+) {
+    Card(
+        modifier = Modifier
+            .fillMaxWidth()
+            .height(120.dp),
+        shape = RoundedCornerShape(8.dp),
+        colors = CardDefaults.cardColors(
+            containerColor = Color.White
+        ),
+        elevation = CardDefaults.cardElevation(
+            defaultElevation = 2.dp
+        )
+    ) {
+        Row(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(12.dp),
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            // Game Image
+            Image(
+                painter = painterResource(id = imageRes),
+                contentDescription = title,
+                modifier = Modifier
+                    .width(70.dp)
+                    .height(96.dp)
+                    .clip(RoundedCornerShape(4.dp)),
+                contentScale = ContentScale.Crop
             )
+
+            Spacer(modifier = Modifier.width(12.dp))
+
+            // Game Info
+            Column(
+                modifier = Modifier
+                    .weight(1f)
+                    .fillMaxHeight(),
+                verticalArrangement = Arrangement.Center
+            ) {
+                Text(
+                    text = title,
+                    fontSize = 16.sp,
+                    fontWeight = FontWeight.Bold,
+                    color = Color(0xFFE91E63)
+                )
+
+                Spacer(modifier = Modifier.height(4.dp))
+
+                Text(
+                    text = category,
+                    fontSize = 14.sp,
+                    color = Color.Gray
+                )
+
+                Spacer(modifier = Modifier.height(8.dp))
+
+                Text(
+                    text = price,
+                    fontSize = 14.sp,
+                    fontWeight = FontWeight.Medium,
+                    color = Color.Black
+                )
+            }
+
+            // Bookmark Icon
+            IconButton(
+                onClick = onBookmarkClick,
+                modifier = Modifier.size(40.dp)
+            ) {
+                Icon(
+                    imageVector = Icons.Default.Star,
+                    contentDescription = "Bookmark",
+                    tint = Color(0xFFE91E63),
+                    modifier = Modifier.size(24.dp)
+                )
+            }
         }
     }
 }
