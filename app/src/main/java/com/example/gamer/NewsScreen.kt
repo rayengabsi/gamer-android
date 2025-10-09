@@ -2,6 +2,7 @@ package com.example.gamer.ui
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
@@ -33,6 +34,12 @@ fun NewsScreen(
     modifier: Modifier = Modifier
 ) {
     var selectedTab by remember { mutableStateOf(0) }
+    val primaryColor = MaterialTheme.colorScheme.primary
+    val backgroundColor = MaterialTheme.colorScheme.background
+    val surfaceColor = MaterialTheme.colorScheme.surface
+    val onSurfaceColor = MaterialTheme.colorScheme.onSurface
+    val isDarkMode = isSystemInDarkTheme()
+    val barColor = if (isDarkMode) Color.Black else primaryColor
 
     Scaffold(
         topBar = {
@@ -55,33 +62,35 @@ fun NewsScreen(
                     }
                 },
                 colors = TopAppBarDefaults.topAppBarColors(
-                    containerColor = Color(0xFFE91E63)
+                    containerColor = barColor
                 )
             )
         },
         bottomBar = {
             NavigationBar(
-                containerColor = Color(0xFFE91E63)
+                containerColor = barColor
             ) {
                 NavigationBarItem(
                     icon = {
                         Icon(
                             Icons.Default.Notifications,
                             contentDescription = "News",
-                            tint = if (selectedTab == 0) Color.White else Color.White.copy(alpha = 0.6f)
+                            tint = Color.White
                         )
                     },
                     label = {
                         Text(
                             "News",
-                            color = if (selectedTab == 0) Color.White else Color.White.copy(alpha = 0.6f)
+                            color = Color.White
                         )
                     },
                     selected = selectedTab == 0,
                     onClick = { selectedTab = 0 },
                     colors = NavigationBarItemDefaults.colors(
                         selectedIconColor = Color.White,
+                        selectedTextColor = Color.White,
                         unselectedIconColor = Color.White.copy(alpha = 0.6f),
+                        unselectedTextColor = Color.White.copy(alpha = 0.6f),
                         indicatorColor = Color.Transparent
                     )
                 )
@@ -91,13 +100,13 @@ fun NewsScreen(
                         Icon(
                             Icons.Default.ShoppingCart,
                             contentDescription = "Store",
-                            tint = if (selectedTab == 1) Color.White else Color.White.copy(alpha = 0.6f)
+                            tint = Color.White
                         )
                     },
                     label = {
                         Text(
                             "Store",
-                            color = if (selectedTab == 1) Color.White else Color.White.copy(alpha = 0.6f)
+                            color = Color.White
                         )
                     },
                     selected = selectedTab == 1,
@@ -107,7 +116,9 @@ fun NewsScreen(
                     },
                     colors = NavigationBarItemDefaults.colors(
                         selectedIconColor = Color.White,
+                        selectedTextColor = Color.White,
                         unselectedIconColor = Color.White.copy(alpha = 0.6f),
+                        unselectedTextColor = Color.White.copy(alpha = 0.6f),
                         indicatorColor = Color.Transparent
                     )
                 )
@@ -117,20 +128,25 @@ fun NewsScreen(
                         Icon(
                             Icons.Default.Person,
                             contentDescription = "Profile",
-                            tint = if (selectedTab == 2) Color.White else Color.White.copy(alpha = 0.6f)
+                            tint = Color.White
                         )
                     },
                     label = {
                         Text(
                             "Profile",
-                            color = if (selectedTab == 2) Color.White else Color.White.copy(alpha = 0.6f)
+                            color = Color.White
                         )
                     },
                     selected = selectedTab == 2,
-                    onClick = { selectedTab = 2 },
+                    onClick = {
+                        selectedTab = 2
+                        onNavigateToProfile()
+                    },
                     colors = NavigationBarItemDefaults.colors(
                         selectedIconColor = Color.White,
+                        selectedTextColor = Color.White,
                         unselectedIconColor = Color.White.copy(alpha = 0.6f),
+                        unselectedTextColor = Color.White.copy(alpha = 0.6f),
                         indicatorColor = Color.Transparent
                     )
                 )
@@ -142,7 +158,7 @@ fun NewsScreen(
                 .fillMaxSize()
                 .padding(paddingValues)
                 .verticalScroll(rememberScrollState())
-                .background(Color(0xFFF5F5F5))
+                .background(backgroundColor)
         ) {
             Spacer(modifier = Modifier.height(8.dp))
 
@@ -152,7 +168,10 @@ fun NewsScreen(
                     .fillMaxWidth()
                     .padding(horizontal = 16.dp),
                 shape = RoundedCornerShape(12.dp),
-                elevation = CardDefaults.cardElevation(defaultElevation = 4.dp)
+                elevation = CardDefaults.cardElevation(defaultElevation = 4.dp),
+                colors = CardDefaults.cardColors(
+                    containerColor = surfaceColor
+                )
             ) {
                 Column {
                     Image(
@@ -167,14 +186,14 @@ fun NewsScreen(
                     Column(
                         modifier = Modifier
                             .fillMaxWidth()
-                            .background(Color.White)
+                            .background(surfaceColor)
                             .padding(16.dp)
                     ) {
                         Text(
                             text = "Top 10 Gaming News of the day",
                             fontSize = 18.sp,
                             fontWeight = FontWeight.Bold,
-                            color = Color.Black
+                            color = onSurfaceColor
                         )
 
                         Spacer(modifier = Modifier.height(8.dp))
@@ -182,7 +201,7 @@ fun NewsScreen(
                         Text(
                             text = "Here's the latest news from the gaming and e-sports world.",
                             fontSize = 14.sp,
-                            color = Color.Gray,
+                            color = onSurfaceColor.copy(alpha = 0.6f),
                             lineHeight = 20.sp
                         )
 
@@ -195,7 +214,7 @@ fun NewsScreen(
                             TextButton(onClick = { showSnack("Show More clicked") }) {
                                 Text(
                                     text = "Show More",
-                                    color = Color(0xFFE91E63),
+                                    color = primaryColor,
                                     fontWeight = FontWeight.Bold
                                 )
                             }
@@ -212,7 +231,10 @@ fun NewsScreen(
                     .fillMaxWidth()
                     .padding(horizontal = 16.dp),
                 shape = RoundedCornerShape(12.dp),
-                elevation = CardDefaults.cardElevation(defaultElevation = 4.dp)
+                elevation = CardDefaults.cardElevation(defaultElevation = 4.dp),
+                colors = CardDefaults.cardColors(
+                    containerColor = surfaceColor
+                )
             ) {
                 Column {
                     Image(
@@ -227,21 +249,21 @@ fun NewsScreen(
                     Column(
                         modifier = Modifier
                             .fillMaxWidth()
-                            .background(Color.White)
+                            .background(surfaceColor)
                             .padding(16.dp)
                     ) {
                         Text(
                             text = "The Legend of Zelda",
                             fontSize = 18.sp,
                             fontWeight = FontWeight.Bold,
-                            color = Color.Black
+                            color = onSurfaceColor
                         )
                         Spacer(modifier = Modifier.height(8.dp))
 
                         Text(
                             text = "Here's the latest news from the gaming and e-sports world.",
                             fontSize = 14.sp,
-                            color = Color.Gray,
+                            color = onSurfaceColor.copy(alpha = 0.6f),
                             lineHeight = 20.sp
                         )
 
@@ -254,7 +276,7 @@ fun NewsScreen(
                             TextButton(onClick = { showSnack("Show More clicked") }) {
                                 Text(
                                     text = "Show More",
-                                    color = Color(0xFFE91E63),
+                                    color = primaryColor,
                                     fontWeight = FontWeight.Bold
                                 )
                             }
